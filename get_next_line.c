@@ -6,57 +6,66 @@
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:02:58 by acastano          #+#    #+#             */
-/*   Updated: 2022/01/19 19:11:02 by acastano         ###   ########.fr       */
+/*   Updated: 2022/01/21 20:16:09 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "./libft/libft.h"
 #include <unistd.h>//read
-#include <stdio.h>//printf
 #include <stdlib.h>//free
-//# define BUFF_SIZE 42 defined in get_next_line.h
-# define FD_SIZE 4096
+# define FD_MAX 4096
 
-int	get_next_line(const int fd, char **line)
+int	ft_gnl(char **rem, char ***line)//find line in rem
+{
+	char	*location;
+
+	location = ft_strchr(*rem, '\n');
+	if (location)
+		{
+			**line = ft_strsub(*rem, 0, (location - *rem));// until \n;
+			*rem = location + 1;// after \n;
+			return (1);
+		}
+	return (0);
+}
+
+int	ft_remainder(char **rem, const int fd)//is there a rem or can you get one?
 {
 	char	*buf;
-	char	*temp;
-	size_t	bytes_read;
-	int	newline;
-	static char	*fd_tracker[FD_SIZE];
-
-	newline = 1;
-	if (fd < 0 || line == NULL)//if no file or no place to return possible read line
-		return (-1);
 
 	buf = ft_strnew(BUFF_SIZE + 1);
 	if (!buf)
-		return (-1);
-	bytes_read = read(fd, buf, BUFF_SIZE);
-	temp = ft_strdup(buf);
-	if (!temp)
-	{
-		free(buf);
-		return(-1);
-	}
-	while (read(fd, buf, BUFF_SIZE))
-	{
-		if (ft_strchr(temp, '\n'))
-		{
-			newline = 0;
-			break;
-		}
-		temp = ft_strjoin(temp, buf);
-		bytes_read = ft_strlen(temp);
-//		if (ft_strchr(temp, '\n'))
-//			break;
+		return (-1);//should return somewhere this
+	if (read(fd, buf, BUFF_SIZE) == 0)
+		return (0);
+	if (*rem == NULL)
+		*rem = ft_strdup(buf);
+	else
+		*rem = ft_strjoin(*rem, buf);
+	free(buf);
+	return (1);
 }
-//\n EOF
-	if (newline)//get string ending before the \n
+
+int	get_next_line(const int fd, char **line)
+{
+	static char	*fd_tracker[FD_MAX + 1];
+
+	if (fd < 0 || line == NULL || fd > FD_MAX || BUFF_SIZE <= 0)
+		return (-1);
+	*line = NULL;
+	while (*line == NULL)//until we find a line
 	{
-		ft_memccpy(fd_tracker[fd], temp, '\n', bytes_read);
+		if (fd_tracker[fd] != NULL)//if something saved from this file
+		{
+			if (ft_gnl(&fd_tracker[fd], &line) == 1)//is there a nl?
+				return (1);
+		}
+		if (ft_remainder(&fd_tracker[fd], fd) == 0)//read and get rem, or EOF return 0
+		{
+//what if no nl but EOF
+			return (0);
+		}
 	}
-	*line = temp;
-	return ((bytes_read == 0) ? 0 : 1);
+	return (0);
 }
