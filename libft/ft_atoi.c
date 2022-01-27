@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 13:53:43 by acastano          #+#    #+#             */
-/*   Updated: 2022/01/27 20:05:00 by acastano         ###   ########.fr       */
+/*   Created: 2021/11/11 17:53:19 by acastano          #+#    #+#             */
+/*   Updated: 2022/01/27 17:19:51 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 42
-# define FD_MAX 8192
-# include <string.h>
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
+int	ft_atoi(const char *s)
+{
+	int	nb;
+	int	i;
+	int	sign;
 
-#endif
+	nb = 0;
+	i = 0;
+	sign = 1;
+	while ((s[i] >= 9 && s[i] <= 13) || s[i] == ' ')
+		i++;
+	if (s[i] == '+' || s[i] == '-')
+	{
+		if (s[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (ft_isdigit(s[i]))
+	{
+		nb = nb * 10 + (s[i] - 48);
+		i++;
+	}
+	return (sign * nb);
+}

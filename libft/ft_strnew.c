@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_strnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 13:53:43 by acastano          #+#    #+#             */
-/*   Updated: 2022/01/27 20:05:00 by acastano         ###   ########.fr       */
+/*   Created: 2021/12/01 13:14:35 by acastano          #+#    #+#             */
+/*   Updated: 2022/01/27 17:45:40 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 42
-# define FD_MAX 8192
-# include <string.h>
+#include "libft.h"
+#include <stdlib.h>
 
-int	get_next_line(const int fd, char **line);
+char	*ft_strnew(size_t size)
+{
+	char	*new;
 
-#endif
+	new = (char *)malloc(sizeof(char) * size + 1);
+	if (!new)
+		return (NULL);
+	ft_bzero(new, size + 1);
+	return (new);
+}

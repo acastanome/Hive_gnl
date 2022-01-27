@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_word_count.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 13:53:43 by acastano          #+#    #+#             */
-/*   Updated: 2022/01/27 20:05:00 by acastano         ###   ########.fr       */
+/*   Created: 2021/12/02 14:08:46 by acastano          #+#    #+#             */
+/*   Updated: 2022/01/27 17:50:13 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 42
-# define FD_MAX 8192
-# include <string.h>
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
+size_t	ft_word_count(char const *s, char c)
+{
+	size_t	count;
 
-#endif
+	count = 0;
+	while (*s != '\0')
+	{
+		while (*s == c)
+			s++;
+		if (*s != c && *s != '\0')
+			count++;
+		while (*s != c && *s != '\0')
+			s++;
+	}
+	return (count);
+}

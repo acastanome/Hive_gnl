@@ -1,21 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 13:53:43 by acastano          #+#    #+#             */
-/*   Updated: 2022/01/27 20:05:00 by acastano         ###   ########.fr       */
+/*   Created: 2021/11/26 16:58:39 by acastano          #+#    #+#             */
+/*   Updated: 2022/01/27 17:37:41 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 42
-# define FD_MAX 8192
-# include <string.h>
+#include "libft.h"
 
-int	get_next_line(const int fd, char **line);
-
-#endif
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	if (dst < src)
+	{
+		ft_memcpy(dst, src, len);
+	}
+	else if (!dst && !src && len > 0)
+		return (dst);
+	else
+	{
+		while (len > 0)
+		{
+			((char *)dst)[len - 1] = ((const char *)src)[len - 1];
+			len--;
+		}
+	}
+	return (dst);
+}
