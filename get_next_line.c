@@ -6,7 +6,7 @@
 /*   By: acastano <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/16 15:02:58 by acastano          #+#    #+#             */
-/*   Updated: 2022/02/01 21:09:46 by acastano         ###   ########.fr       */
+/*   Updated: 2022/02/02 16:59:37 by acastano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,12 @@ static int	ft_get_text(char **saved_text, const int fd)
 			free(*saved_text);
 			*saved_text = temp;
 		}
+		free(buf);
 		if (!(*saved_text))
-		{
-			free(buf);
 			return (-1);
-		}
 	}
-	free(buf);
+	if (chars_read <= 0)
+		free(buf);
 	return (chars_read);
 }
 
