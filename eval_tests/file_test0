@@ -1,0 +1,5 @@
+Next line is a diferent file:
+Now it's first file again:
+Read me please.
+I am another line, slightly longer. But next 2 lines are a different file:
+This now is an extremely long line that shouldn't be read with a single buffer, or so I hope. It's also the last line of this file.

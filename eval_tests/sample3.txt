@@ -1,0 +1,3 @@
+There is 3 lines in this sample. Still part of the first one.
+HERE IS THE SECOND LINE.
+And third part is the last part.
